@@ -24,8 +24,9 @@ RUN apk update && \
 FROM postgres:${POSTGRES_VERSION}-alpine
 ARG POSTGRES_VERSION
 
-RUN apk add glib libgcc libstdc++ musl musl-utils openssl protobuf protobuf-c llvm krb5 && \
-    apk add glib libgcc libstdc++ musl musl-utils krb5 openssl protobuf protobuf-c && \
+RUN apk update && \
+    apk upgrade && \
+    apk add glib libgcc libstdc++ musl musl-utils openssl protobuf protobuf-c llvm krb5 && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'pgaudit,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'pg_squeeze,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'decoderbufs,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample
