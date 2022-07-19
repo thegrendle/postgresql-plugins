@@ -18,5 +18,8 @@ function publish {
 if [[ $# -eq 0 ]]; then
   build
 else
-  $1
+  while [[ $# -ne 0 ]]; do
+    $1
+    shift
+  done
 fi
