@@ -1,2 +1,2 @@
-# timescaledb
-TimescaleDB Docker Images
+# PostgreSQL w/ plugins
+PostgreSQL Docker Images
