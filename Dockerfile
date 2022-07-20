@@ -38,4 +38,4 @@ COPY --from=pluginbuild \
   /usr/local/share/postgresql/extension/pgaudit* \
   /usr/local/share/postgresql/extension/pg_squeeze* \
   /usr/local/share/postgresql/extension/
-COPY 000_install_pg_squeeze.sh /docker-entrypoint-initdb.d/
+COPY 000_install_pg_squeeze.sh 000_install_pgaudit.sh /docker-entrypoint-initdb.d/
