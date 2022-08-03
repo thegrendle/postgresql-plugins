@@ -31,7 +31,7 @@ pgaudit.log_level = 'log'
 pgaudit.log_parameter = 'on'
 pgaudit.log_relation = on
 pgaudit.log_statement_once = 'off'
-pgaudit.log = 'write, dll, role, read, function'
+pgaudit.log = 'write, ddl, role, read, function'
 wal_level = logical
 max_replication_slots = 12
 EOF
