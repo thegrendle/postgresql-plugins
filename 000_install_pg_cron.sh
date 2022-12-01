@@ -21,7 +21,12 @@ if [ -z "${POSTGRESQL_CONF_DIR:-}" ]; then
         POSTGRESQL_CONF_DIR=${PGDATA}
 fi
 
-cat <<EOF >${create_sql}
+
+cat << EOF >> ${POSTGRESQL_CONF_DIR}/postgresql.conf
+cron.database_name = '${POSTGRES_USER}'
+EOF
+
+cat << EOF >${create_sql}
 CREATE EXTENSION if not exists pg_cron;
 EOF
 
