@@ -1,6 +1,6 @@
 #!/bin/bash
 
-create_sql=`mktemp`
+create_sql="$( mktemp )"
 
 # Checks to support bitnami image with same scripts so they stay in sync
 if [ ! -z "${BITNAMI_IMAGE_VERSION:-}" ]; then
@@ -21,12 +21,11 @@ if [ -z "${POSTGRESQL_CONF_DIR:-}" ]; then
         POSTGRESQL_CONF_DIR=${PGDATA}
 fi
 
-
 cat << EOF >> ${POSTGRESQL_CONF_DIR}/postgresql.conf
 cron.database_name = '${POSTGRES_USER}'
 EOF
 
-cat << EOF >${create_sql}
+cat << EOF > ${create_sql}
 CREATE EXTENSION if not exists pg_cron;
 EOF
 
