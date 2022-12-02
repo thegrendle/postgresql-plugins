@@ -25,14 +25,10 @@ cat << EOF >> ${POSTGRESQL_CONF_DIR}/postgresql.conf
 cron.database_name = '${POSTGRES_USER}'
 EOF
 
+/usr/local/bin/pg_ctl restart
+
 cat << EOF > ${create_sql}
-CREATE EXTENSION if not exists pg_cron;
+CREATE EXTENSION pg_cron;
 EOF
 
-# create extension timescaledb in initial databases
-psql -U "${POSTGRES_USER}" postgres -f ${create_sql}
-psql -U "${POSTGRES_USER}" template1 -f ${create_sql}
-
-if [ "${POSTGRES_DB:-postgres}" != 'postgres' ]; then
-    psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -f ${create_sql}
-fi
+psql -U "${POSTGRES_USER}" "${POSTGRES_DB}" -f ${create_sql}
