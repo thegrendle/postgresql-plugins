@@ -4,6 +4,7 @@ declare date="$( date +%Y%m%d )"
 POSTGRES_VERSION="${POSTGRES_VERSION:-14}"
 
 function build {
+  docker image pull postgres:${POSTGRES_VERSION}-alpine
   docker build \
     --build-arg POSTGRES_VERSION=${POSTGRES_VERSION} \
     -t dblonski/postgresql-plugins:pg${POSTGRES_VERSION}-${date} \
