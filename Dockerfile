@@ -5,7 +5,7 @@ FROM postgres:${POSTGRES_VERSION}-alpine as pluginbuild
 ARG POSTGRES_VERSION
 RUN apk update && \
     apk upgrade && \
-    apk add git make clang gcc glib-dev llvm-dev krb5-dev musl-dev protobuf-c-dev openssl-dev postgresql-pg_cron && \
+    apk add git make clang15 gcc glib-dev llvm15-dev krb5-dev musl-dev protobuf-c-dev openssl-dev postgresql-pg_cron && \
     git config --global http.sslVerify false && \
     git clone https://github.com/debezium/postgres-decoderbufs.git /build/decoderbufs && \
     cd /build/decoderbufs && \
