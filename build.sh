@@ -1,7 +1,7 @@
 #!/bin/bash
 
 declare date="$( date +%Y%m%d )"
-POSTGRES_VERSION="${POSTGRES_VERSION:-14}"
+POSTGRES_VERSION="${POSTGRES_VERSION:-15}"
 
 function build {
   docker build \
