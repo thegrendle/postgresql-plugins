@@ -10,6 +10,17 @@ function build {
     .
 }
 
+function tag_only {
+  local POSTGRES_FULL_VERSION="$( docker run -it dblonski/postgresql-plugins:pg${POSTGRES_VERSION}-${date} psql --version | awk '{ print $3; }' | tr '\n\r' '  ' )"
+  local TAGS=(
+    "pg${POSTGRES_VERSION}-latest"
+    "pg${POSTGRES_FULL_VERSION}"
+    )
+  for tag in ${TAGS[@]}; do
+    docker tag dblonski/postgresql-plugins:pg${POSTGRES_VERSION}-${date} dblonski/postgresql-plugins:${tag}
+  done
+}
+
 function publish {
   local POSTGRES_FULL_VERSION="$( docker run -it dblonski/postgresql-plugins:pg${POSTGRES_VERSION}-${date} psql --version | awk '{ print $3; }' | tr '\n\r' '  ' )"
   local TAGS=(
