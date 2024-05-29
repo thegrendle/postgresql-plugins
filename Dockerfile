@@ -1,5 +1,5 @@
 # https://github.com/thegrendle/docker
-ARG POSTGRES_VERSION=15
+ARG POSTGRES_VERSION=16
 
 FROM postgres:${POSTGRES_VERSION}-alpine as pluginbuild
 ARG POSTGRES_VERSION
