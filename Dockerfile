@@ -1,7 +1,7 @@
 # https://github.com/thegrendle/docker
 ARG POSTGRES_VERSION=16
 
-FROM postgres:${POSTGRES_VERSION}-alpine as pluginbuild
+FROM postgres:${POSTGRES_VERSION}-alpine AS pluginbuild
 ARG POSTGRES_VERSION
 RUN apk update && \
     apk upgrade && \
