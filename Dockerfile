@@ -1,5 +1,17 @@
 # https://github.com/thegrendle/docker
 ARG POSTGRES_VERSION=16
+ARG GOLANG_VERSION=1.23
+
+FROM golang:${GOLANG_VERSION}-alpine AS gosubuild
+ARG GOLANG_VERSION
+RUN apk update && \
+    apk upgrade && \
+    apk add git && \
+    git config --global http.sslVerify false && \
+    git clone https://github.com/tianon/gosu.git /build/gosu && \
+    cd /build/gosu && \
+    git checkout 1.17 && \
+    go build .
 
 FROM postgres:${POSTGRES_VERSION}-alpine AS pluginbuild
 ARG POSTGRES_VERSION
@@ -35,6 +47,8 @@ RUN apk update && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'pg_squeeze,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'decoderbufs,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample && \
     sed -r -i "s/[#]*\s*(shared_preload_libraries)\s*=\s*'(.*)'/\1 = 'pg_cron,\2'/;s/,'/'/" /usr/local/share/postgresql/postgresql.conf.sample
+
+COPY --from=gosubuild /build/gosu/gosu /usr/local/bin/gosu
 
 COPY --from=pluginbuild \
   /usr/local/lib/postgresql/decoderbufs.so \
