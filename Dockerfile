@@ -1,6 +1,8 @@
 # https://github.com/thegrendle/docker
 ARG POSTGRES_VERSION=16
-ARG GOLANG_VERSION=1.23
+ARG GOLANG_VERSION=1.24
+ARG GOSU_VERSION=1.17
+ARG CLANG_VERSION=19
 
 FROM golang:${GOLANG_VERSION}-alpine AS gosubuild
 ARG GOLANG_VERSION
@@ -10,14 +12,14 @@ RUN apk update && \
     git config --global http.sslVerify false && \
     git clone https://github.com/tianon/gosu.git /build/gosu && \
     cd /build/gosu && \
-    git checkout 1.17 && \
+    git checkout ${GOSU_VERSION} && \
     go build .
 
 FROM postgres:${POSTGRES_VERSION}-alpine AS pluginbuild
 ARG POSTGRES_VERSION
 RUN apk update && \
     apk upgrade && \
-    apk add git make clang15 gcc glib-dev llvm15-dev krb5-dev musl-dev protobuf-c-dev openssl-dev && \   
+    apk add git make clang${CLANG_VERSION} gcc glib-dev llvm${CLANG_VERSION}-dev krb5-dev musl-dev protobuf-c-dev openssl-dev && \
     git config --global http.sslVerify false && \
     git clone https://github.com/debezium/postgres-decoderbufs.git /build/decoderbufs && \
     cd /build/decoderbufs && \
