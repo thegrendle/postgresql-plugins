@@ -5,6 +5,7 @@ POSTGRES_VERSION="${POSTGRES_VERSION:-18}"
 
 function build {
   docker build \
+    --no-cache \
     --build-arg POSTGRES_VERSION=${POSTGRES_VERSION} \
     -t dblonski/postgresql-plugins:pg${POSTGRES_VERSION}-${date} \
     .
